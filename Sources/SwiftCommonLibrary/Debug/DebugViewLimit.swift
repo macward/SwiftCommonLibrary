@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct DebugViewLimit: ViewModifier {
+fileprivate struct DebugViewLimit: ViewModifier {
     var color: Color
     func body(content: Content) -> some View {
         content
@@ -15,7 +15,7 @@ struct DebugViewLimit: ViewModifier {
     }
 }
 
-extension View {
+public extension View {
     func debugViewLimit(_ color: Color = .green) -> some View {
         modifier(DebugViewLimit(color: color))
     }
