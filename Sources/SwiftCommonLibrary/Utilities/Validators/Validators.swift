@@ -9,6 +9,7 @@ import Foundation
 
 public struct EmailValidator: Validatable {
     private let emailPattern = #"^\S+@\S+\.\S+$"#
+    public init() {}
     public func validate(_ str: String) -> Result<Bool, ValidationError> {
         if str.isEmpty {
             return .failure(.Message("Username is empty"))
@@ -29,7 +30,7 @@ public struct UsernameValidator: Validatable {
                                   "[a-zA-Z0-9]" +
                                   "{2,9}" +
                                   "$"
-    
+    public init() {}
     public func validate(_ str: String) -> Result<Bool, ValidationError> {
         
         if str.isEmpty {
@@ -49,7 +50,7 @@ public struct UsernameValidator: Validatable {
 }
 
 public struct PasswordValidator: Validatable {
-    
+    public init() {}
     public func validate(_ str: String) -> Result<Bool, ValidationError> {
         
         // password is empty
