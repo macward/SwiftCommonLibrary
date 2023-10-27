@@ -7,10 +7,7 @@
 
 import Foundation
 
-public enum ValidationError: Error {
-    case Message(String)
-}
-
 public protocol Validatable {
-    func validate(_ str: String) -> Result<Bool, ValidationError>
+    var errorMessage: String { get set}
+    func validate(_ str: String) -> Bool
 }

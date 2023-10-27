@@ -7,68 +7,59 @@
 
 import Foundation
 
-public struct EmailValidator: Validatable {
+public class EmailValidator: Validatable {
+    
+    public var errorMessage: String = ""
+    
     private let emailPattern = #"^\S+@\S+\.\S+$"#
+    
     public init() {}
-    public func validate(_ str: String) -> Result<Bool, ValidationError> {
+    
+    public func validate(_ str: String) -> Bool {
         if str.isEmpty {
-            return .failure(.Message("Username is empty"))
+            self.errorMessage = "Username is empty"
+            return false
         }
         
         let predicate = NSPredicate(format:"SELF MATCHES %@", emailPattern)
         if  !predicate.evaluate(with: str) {
-            return .failure(.Message("Invalid email address."))
+            self.errorMessage = "Invalid email address"
+            return false
         }
-        
-        return .success(true)
+        self.errorMessage = ""
+        return true
     }
 }
 
-public struct UsernameValidator: Validatable {
-    private let usernamePattern = "^" +
-                                  "[a-zA-Z]" +
-                                  "[a-zA-Z0-9]" +
-                                  "{2,9}" +
-                                  "$"
-    public init() {}
-    public func validate(_ str: String) -> Result<Bool, ValidationError> {
+public class PasswordValidator: Validatable {
+    
+    public var errorMessage: String = ""
+    
+    public init() {
         
-        if str.isEmpty {
-            return .failure(.Message("Username is empty"))
-        }
-        
-        if str.count < 3 {
-            return .failure(.Message("Username must be at least 3 characters long."))
-        }
-        
-        let predicate = NSPredicate(format:"SELF MATCHES %@", usernamePattern)
-        if  !predicate.evaluate(with: str) {
-            return .failure(.Message("Please, check your username."))
-        }
-        return .success(true)
     }
-}
-
-public struct PasswordValidator: Validatable {
-    public init() {}
-    public func validate(_ str: String) -> Result<Bool, ValidationError> {
-        
+    
+    public func validate(_ str: String) -> Bool {
         // password is empty
         if str.count < 6 {
-            return .failure(.Message("Password must be at least 6 characters long."))
+            self.errorMessage = "Password must be at least 6 characters long."
+            return false
         }
         // password lowercase
         if !str.contains(where: { $0.isLowercase }) {
-            return .failure(.Message("Password must include at least 1 lowercase letter."))
+            self.errorMessage = "Password must include at least 1 lowercase letter."
+            return false
         }
         // check uppercase
         if !str.contains(where: { $0.isUppercase }) {
-            return .failure(.Message("Password must include at least 1 uppercase letter."))
+            self.errorMessage = "Password must include at least 1 uppercase letter."
+            return false
         }
         if !str.contains(where: { "!@#$%^&*()_-+=[{]};:'\",<.>/?".contains($0) }) {
-            return .failure(.Message("Password must include at least 1 special character."))
+            self.errorMessage = "Password must include at least 1 special character."
+            return false
         }
-        
-        return .success(true)
+        self.errorMessage = ""
+        return true
     }
 }
