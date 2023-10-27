@@ -17,7 +17,7 @@ public class EmailValidator: Validatable {
     
     public func validate(_ str: String) -> Bool {
         if str.isEmpty {
-            self.errorMessage = "Username is empty"
+            self.errorMessage = "Email could not be empty"
             return false
         }
         
