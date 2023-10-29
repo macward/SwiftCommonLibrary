@@ -25,6 +25,24 @@ public struct BaseView<Content: View>: View {
     }
 }
 
+public struct GradientContainerView<Content: View>: View {
+    
+    var background: RadialGradient
+    @ViewBuilder var content: Content
+    
+    public init(background: RadialGradient, content: @escaping () -> Content) {
+        self.background = background
+        self.content = content()
+    }
+    
+    public var body: some View {
+        ZStack {
+            background.ignoresSafeArea()
+            content
+        }
+    }
+}
+
 #Preview {
     BaseView(color: .red) {
         Text("View")
