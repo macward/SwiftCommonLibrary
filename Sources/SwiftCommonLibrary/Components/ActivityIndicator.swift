@@ -30,7 +30,7 @@ public struct LoadingView: View {
     
     public var body: some View {
         ZStack(alignment: .center) {
-            Color(.systemBackground)
+            Color(.white)
                 .ignoresSafeArea()
                 .opacity(0.8)
             ProgressView()

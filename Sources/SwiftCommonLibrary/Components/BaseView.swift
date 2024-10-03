@@ -7,10 +7,33 @@
 
 import SwiftUI
 
+public struct BaseImageView<Content: View>: View {
+    
+    var image: String
+    @ViewBuilder var content: Content
+    
+    public init(image: String, content: @escaping () -> Content) {
+        self.image = image
+        self.content = content()
+    }
+    
+    public var body: some View {
+        ZStack {
+            Image(image)
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(minWidth: 0, maxWidth: .infinity)
+                .edgesIgnoringSafeArea(.all)
+            
+            content
+        }
+    }
+}
+
 public struct BaseView<Content: View>: View {
     
     var color: Color
-    var content: Content
+    @ViewBuilder var content: Content
     
     public init(color: Color, content: @escaping () -> Content) {
         self.color = color
